@@ -6,7 +6,7 @@ import { Container, Typography } from '@mui/material';
 const App = () => (
   <Container>
     <Typography variant="h4" align="center" gutterBottom>
-      Spotify Music Search
+      Spotify Tracks
     </Typography>
     <SearchBar />
     <TrackList />
