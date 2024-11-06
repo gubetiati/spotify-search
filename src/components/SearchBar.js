@@ -1,44 +1,40 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { fetchTracks } from '../redux/searchSlice';
-import { TextField, Button } from '@mui/material';
-import useSpotifyToken from '../hooks/useSpotifyToken';
+import React from 'react';
+import { TextField, Button, Box, Typography } from '@mui/material'; 
 
-const SearchBar = () => {
-  const [query, setQuery] = useState('');
-  const [error, setError] = useState(false);
-  const dispatch = useDispatch();
-  const token = useSpotifyToken();
-
-  const handleSearch = () => {
-    if (!query.trim()) {
-      setError(true);
-      return;
-    }
-    setError(false);
-
-    if (token) {
-      dispatch(fetchTracks({ query, token }));
-    } else {
-      console.error('Token indisponível');
-    }
-  };
-
+const SearchBar = ({ query, setQuery, handleSearch, error }) => {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', margin: '20px' }}>
+    <Box display="flex" flexDirection="column" alignItems="center" mb={3}>
       <TextField
-        label="Digite uma música"
+        label="Pesquise uma faixa, artista ou álbum"
         variant="outlined"
+        fullWidth
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         error={error}
-        helperText={error ? "O campo não pode estar vazio." : ""}
-        fullWidth
+        helperText={error ? "Campo de busca é obrigatório!" : ""}
+        style={{ 
+          marginBottom: '10px', 
+          backgroundColor: '#282828', 
+          color: 'white', 
+          borderColor: '#535353' 
+        }}
+        InputLabelProps={{
+          style: { color: '#b3b3b3' }
+        }}
+        InputProps={{
+          style: { color: 'white' }
+        }}
       />
-      <Button variant="contained" color="primary" onClick={handleSearch}>
+      <Button 
+        variant="contained" 
+        color="primary" 
+        onClick={handleSearch} 
+        fullWidth
+        style={{ backgroundColor: '#1DB954', marginTop: '10px' }}
+      >
         Buscar
       </Button>
-    </div>
+    </Box>
   );
 };
 
