@@ -1,13 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { List, ListItem, ListItemText } from '@mui/material';
+import { List, ListItem, ListItemText, Typography } from '@mui/material';
 
 const TrackList = () => {
   const { tracks, status } = useSelector((state) => state.search);
 
-  if (status === 'loading') return <p>Loading...</p>;
-  if (status === 'failed') return <p>Error loading tracks.</p>;
-  if (tracks.length === 0) return <p>No tracks found.</p>;
+  if (status === 'loading') return <p>Carregando...</p>;
+  if (status === 'failed') return <Typography color="error">Erro ao buscar músicas. Por favor, tente mais tarde.</Typography>;
+  if (tracks.length === 0) return <Typography>Músicas não encontradas.</Typography>;
 
   return (
     <List>
