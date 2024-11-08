@@ -31,8 +31,8 @@ Para rodar o projeto localmente, você precisa ter o **Node.js** instalado.
 
 1. Clone este repositório:
    ```bash
-   git clone https://github.com/seu-usuario/spotify-search-app.git
-   cd spotify-search-app
+   git clone https://github.com/seu-usuario/spotify-search.git
+   cd spotify-search
 
 2. Instale as dependências:
    ```bash
