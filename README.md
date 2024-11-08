@@ -4,7 +4,7 @@ Este projeto é uma aplicação de página única (SPA) construída com React pa
 
 ## Demonstração
 
-Você pode acessar a versão em produção do projeto [aqui](https://spotify-search-five.vercel.app).
+Você pode acessar o deploy feito na Vercel [aqui](https://spotify-search-five.vercel.app).
 
 ## Funcionalidades
 
