@@ -1,6 +1,6 @@
 # Spotify Search App
 
-Este projeto é uma aplicação de página única (SPA) construída com React, que permite aos usuários buscar faixas na API do Spotify e visualizar os resultados. O aplicativo inclui uma interface moderna usando Material-UI e gerenciamento de estado com Redux.
+Este projeto é uma aplicação de página única (SPA) construída com React para a disciplina de Programação Web Fullstack(ES71), que permite aos usuários buscar faixas na API do Spotify e visualizar os resultados. O aplicativo inclui uma interface moderna usando Material-UI e gerenciamento de estado com Redux.
 
 ## Demonstração
 
