@@ -41,4 +41,4 @@ Para rodar o projeto localmente, você precisa ter o **Node.js** instalado.
 3. Crie um arquivo .env na raiz do projeto com as seguintes variáveis de ambiente:
    ```bash
     REACT_APP_SPOTIFY_CLIENT_ID=<seu_client_id>
-    REACT_APP_SPOTIFY_CLIENT_SECRET=<seu_client_secret>
+    REACT_APP_REDIRECT_URI=http://localhost:3000/callback
