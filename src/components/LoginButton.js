@@ -13,7 +13,7 @@ const authUrl = `${authEndpoint}?client_id=${clientId}&redirect_uri=${encodeURIC
 
 const LoginButton = () => {
   const handleLogin = () => {
-    window.location.href = authUrl
+    window.location.href = authUrl;
   };
 
   return (
