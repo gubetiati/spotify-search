@@ -1,7 +1,7 @@
 import React from 'react';
 import { List, ListItem, ListItemText, Divider, Typography, Checkbox } from '@mui/material';
 
-const TrackList = ({ tracks, onSelectTrack }) => {
+const TrackList = ({ tracks, onSelectTrack, selectedTracks }) => {
   return (
     <List style={{ marginTop: '20px' }}>
       {tracks.map((track, index) => (
@@ -9,6 +9,7 @@ const TrackList = ({ tracks, onSelectTrack }) => {
           <ListItem>
             <Checkbox
               color="primary"
+              checked={selectedTracks.some((selectedTrack) => selectedTrack.id === track.id)} // Verifica se a música está selecionada
               onChange={() => onSelectTrack(track)} // Adiciona/remove a música da lista de selecionadas
             />
             <ListItemText

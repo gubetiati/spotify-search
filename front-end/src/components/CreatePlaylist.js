@@ -9,13 +9,8 @@ const CreatePlaylist = ({ token, selectedTracks, onPlaylistCreated }) => {
       alert('Preencha o nome da playlist e selecione pelo menos uma música.');
       return;
     }
-  
+
     try {
-      console.log('Dados enviados:', { // Log dos dados enviados
-        name: playlistName,
-        tracks: selectedTracks.map(track => track.id),
-      });
-  
       const response = await fetch('/api/playlists', {
         method: 'POST',
         headers: {
@@ -24,24 +19,22 @@ const CreatePlaylist = ({ token, selectedTracks, onPlaylistCreated }) => {
         },
         body: JSON.stringify({ 
           name: playlistName, 
-          tracks: selectedTracks.map(track => track.id),
+          tracks: selectedTracks.map(track => track.name), 
         }),
       });
-  
-      console.log('Resposta do back-end:', response); // Log da resposta do back-end
-  
+
+      console.log('Enviando playlist:', { name: playlistName, tracks: selectedTracks.map(track => track.name) });
+
       const data = await response.json();
-      console.log('Dados da resposta:', data); // Log dos dados da resposta
-  
       if (response.ok) {
         alert('Playlist criada com sucesso!');
-        onPlaylistCreated(data.playlist);
-        setPlaylistName('');
+        onPlaylistCreated(data.playlist); 
+        setPlaylistName(''); 
       } else {
         alert(data.message || 'Erro ao criar playlist');
       }
     } catch (error) {
-      console.error('Erro ao criar playlist:', error); // Log do erro
+      console.error('Erro ao criar playlist:', error);
       alert('Erro ao criar playlist. Tente novamente.');
     }
   };
@@ -51,14 +44,27 @@ const CreatePlaylist = ({ token, selectedTracks, onPlaylistCreated }) => {
       <TextField
         label="Nome da Playlist"
         variant="outlined"
+        fullWidth 
         value={playlistName}
         onChange={(e) => setPlaylistName(e.target.value)}
-        style={{ marginBottom: '10px', width: '100%' }}
+        style={{ 
+          marginBottom: '10px', 
+          backgroundColor: '#282828', 
+          color: 'white', 
+          borderColor: '#535353' 
+        }}
+        InputLabelProps={{
+          style: { color: '#b3b3b3' } 
+        }}
+        InputProps={{
+          style: { color: 'white' } 
+        }}
       />
       <Button 
         variant="contained" 
         color="primary" 
         onClick={handleCreatePlaylist}
+        fullWidth 
         style={{ backgroundColor: '#1DB954', marginTop: '10px' }}
       >
         Criar Playlist
