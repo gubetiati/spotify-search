@@ -1,18 +1,8 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-const PlaylistSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+const playlistSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  description: { type: String, default: "" },
-  songs: [
-    {
-      spotifyId: { type: String, required: true },
-      title: { type: String, required: true },
-      artist: { type: String, required: true },
-      album: { type: String },
-      coverUrl: { type: String },
-    },
-  ],
+  tracks: [{ type: String, required: true }], // IDs das músicas
 });
 
-module.exports = mongoose.model("Playlist", PlaylistSchema);
+module.exports = mongoose.model('Playlist', playlistSchema);

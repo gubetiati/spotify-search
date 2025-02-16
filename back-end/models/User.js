@@ -1,9 +1,16 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
-const UserSchema = new mongoose.Schema({
-  spotifyId: { type: String, required: true, unique: true },
-  username: { type: String, required: true },
-  email: { type: String, required: false },
+const userSchema = new mongoose.Schema({
+  username: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
 });
 
-module.exports = mongoose.model("User", UserSchema);
+userSchema.pre('save', async function (next) {
+  if (this.isModified('password')) {
+    this.password = await bcrypt.hash(this.password, 10);
+  }
+  next();
+});
+
+module.exports = mongoose.model('User', userSchema);

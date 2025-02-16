@@ -6,10 +6,12 @@ const scopes = [
   "user-read-private",
   "user-read-email",
   "playlist-read-private",
+  "playlist-modify-public",  // Adicionado
+  "playlist-modify-private"  // Adicionado
 ];
 
-const authEndpoint = "https://accounts.spotify.com/authorize"
-const authUrl = `${authEndpoint}?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${scopes.join('%20')}&response_type=token&show_dialog=true`
+const authEndpoint = "https://accounts.spotify.com/authorize";
+const authUrl = `${authEndpoint}?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${scopes.join('%20')}&response_type=token&show_dialog=true`;
 
 const LoginButton = () => {
   const handleLogin = () => {
@@ -23,4 +25,4 @@ const LoginButton = () => {
   );
 };
 
-export default LoginButton;
+export default LoginButton

@@ -9,7 +9,7 @@ export const fetchTracks = createAsyncThunk(
       },
     });
     const data = await response.json();
-    return data.tracks.items;
+    return data.tracks?.items || [];
   }
 );
 
@@ -18,19 +18,23 @@ const searchSlice = createSlice({
   initialState: {
     tracks: [],
     status: 'idle',
+    error: null
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchTracks.pending, (state) => {
         state.status = 'loading';
+        state.error = null;
       })
       .addCase(fetchTracks.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.tracks = action.payload;
       })
-      .addCase(fetchTracks.rejected, (state) => {
+      .addCase(fetchTracks.rejected, (state, action) => {
         state.status = 'failed';
+        state.error = action.error.message;
+        state.tracks = [];
       });
   },
 });

@@ -1,26 +1,27 @@
-require('dotenv').config()
-const express = require('express')
-const cors = require('cors')
-const mongoose = require('mongoose')
-const authRoutes = require("./routes/authRoutes");
+const express = require('express');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+const playlistRoutes = require('./routes/playlists');
 
-mongoose
-    .connect(process.env.MONGO_URI)
-    .then(() => console.log('MongoDB conectado'))
-    .catch((err) => console.error('Erro ao conectador ao MongoDB: ', err))
+dotenv.config(); // Carrega variáveis de ambiente do arquivo .env
 
-const app = express()
+const app = express();
 
-app.use(express.json())
-app.use(cors())
+// Middleware para processar JSON
+app.use(express.json());
 
-app.get('/', (req, res) => {
-    res.send('API de playlists personalizadas')
+// Conecta ao MongoDB
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 })
+.then(() => console.log('Conectado ao MongoDB'))
+.catch(err => console.error('Erro ao conectar ao MongoDB:', err));
 
-app.use("/api/auth", authRoutes);
+// Rotas
+app.use('/api/playlists', playlistRoutes);
 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-    console.log(`Server rodando na porta ${PORT}`)
-})
+  console.log(`Servidor rodando na porta ${PORT}`);
+});
