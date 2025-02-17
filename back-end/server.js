@@ -5,6 +5,7 @@ const rateLimit = require('express-rate-limit');
 const compression = require('compression');
 const expressStaticGzip = require('express-static-gzip');
 const path = require('path');
+const connectDB = require('./src/database')
 
 const spotifyRoutes = require('./src/routes/spotifyRoutes');
 const playlistRoutes = require('./src/routes/playlists');
@@ -20,6 +21,7 @@ const limiter = rateLimit({
 dotenv.config();
 
 const app = express();
+connectDB();
 
 app.use(limiter);
 app.use(compression());
@@ -36,12 +38,6 @@ app.use(
   })
 );
 
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => console.log('Conectado ao MongoDB'))
-.catch(err => console.error('Erro ao conectar ao MongoDB:', err));
 
 app.get('/api/data', (req, res) => {
   res.json({ message: 'Dados comprimidos!' });
