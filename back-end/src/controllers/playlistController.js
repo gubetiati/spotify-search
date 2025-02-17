@@ -1,24 +1,27 @@
 const Playlist = require('../models/Playlist');
-const xss = require('xss'); // Para evitar XSS
+const validator = require('validator');
+const xss = require('xss'); 
 
 // Função para criar uma nova playlist
 exports.createPlaylist = async (req, res) => {
-  const { name, tracks } = req.body;
+  let { name, tracks } = req.body;
 
-  // Verificação dos campos obrigatórios
-  if (!name || tracks.length === 0) {
+  if (!name || !Array.isArray(tracks) || tracks.length === 0) {
     return res.status(400).json({ message: 'Nome da playlist e músicas são obrigatórios.' });
   }
 
-  // Sanitizando os dados para evitar XSS
+  // Sanitiza o nome e verifica caracteres perigosos
+  if (!validator.isAlphanumeric(name.replace(/\s/g, ''))) { 
+    return res.status(400).json({ message: 'Nome da playlist contém caracteres inválidos.' });
+  }
+
   const sanitizedName = xss(name);
-  const sanitizedTracks = tracks.map(track => xss(track)); // Sanitizando apenas o nome das músicas
+  const sanitizedTracks = tracks.map(track => validator.escape(xss(track))); // Evita caracteres perigosos
 
   try {
     const newPlaylist = new Playlist({ name: sanitizedName, tracks: sanitizedTracks });
-    await newPlaylist.save(); // Salvando no banco de dados
+    await newPlaylist.save();
     
-    // Retornando sucesso
     res.status(201).json({ message: 'Playlist criada com sucesso!', playlist: newPlaylist });
   } catch (error) {
     console.error('Erro ao criar playlist:', error.message);
@@ -29,8 +32,8 @@ exports.createPlaylist = async (req, res) => {
 // Função para buscar todas as playlists
 exports.getPlaylists = async (req, res) => {
   try {
-    const playlists = await Playlist.find(); // Buscando todas as playlists no banco
-    res.status(200).json(playlists); // Retornando playlists encontradas
+    const playlists = await Playlist.find(); // Busca todas as playlists no banco de dados
+    res.status(200).json(playlists); // Retorna as playlists encontradas
   } catch (error) {
     console.error('Erro ao buscar playlists:', error);
     res.status(500).json({ message: 'Erro interno do servidor.' });
