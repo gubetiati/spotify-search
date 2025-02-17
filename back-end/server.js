@@ -2,6 +2,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const rateLimit = require('express-rate-limit');
+const compression = require('compression');
+const expressStaticGzip = require('express-static-gzip');
+const path = require('path');
 
 const spotifyRoutes = require('./src/routes/spotifyRoutes');
 const playlistRoutes = require('./src/routes/playlists');
@@ -19,7 +22,19 @@ dotenv.config();
 const app = express();
 
 app.use(limiter);
+app.use(compression());
 app.use(express.json());
+
+app.use(
+  '/static',
+  expressStaticGzip(path.join(__dirname, 'public'), {
+    enableBrotli: true, 
+    orderPreference: ['br', 'gzip'], 
+    serveStatic: {
+      maxAge: '1y',
+    },
+  })
+);
 
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
@@ -27,6 +42,10 @@ mongoose.connect(process.env.MONGO_URI, {
 })
 .then(() => console.log('Conectado ao MongoDB'))
 .catch(err => console.error('Erro ao conectar ao MongoDB:', err));
+
+app.get('/api/data', (req, res) => {
+  res.json({ message: 'Dados comprimidos!' });
+});
 
 app.use('/api/playlists', playlistRoutes);
 app.use('/api', spotifyRoutes);
