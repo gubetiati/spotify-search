@@ -15,7 +15,7 @@ exports.searchTracks = async (req, res) => {
         return res.status(400).json({ message: 'A consulta (query) é obrigatória.' });
     }
 
-    // **Sanitizando a query para evitar XSS e injeção**
+    // **Sanitizando a query para evitar XSS e injeçã
     query = xss(query);  
     query = encodeURIComponent(query); 
 

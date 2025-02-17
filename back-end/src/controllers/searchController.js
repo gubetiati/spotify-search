@@ -1,8 +1,8 @@
 const axios = require('axios');
 
 exports.searchMusic = async (req, res) => {
-  const { q } = req.query;  // O termo de busca (query) vem da requisição
-  const token = req.headers.authorization.split(' ')[1];  // Token do header de Authorization
+  const { q } = req.query;  
+  const token = req.headers.authorization.split(' ')[1]; 
   
   if (!token) {
     return res.status(400).json({ message: 'Token não encontrado!' });
