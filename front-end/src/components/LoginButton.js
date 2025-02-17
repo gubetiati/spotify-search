@@ -6,8 +6,8 @@ const scopes = [
   "user-read-private",
   "user-read-email",
   "playlist-read-private",
-  "playlist-modify-public",  // Adicionado
-  "playlist-modify-private"  // Adicionado
+  "playlist-modify-public",  
+  "playlist-modify-private" 
 ];
 
 const authEndpoint = "https://accounts.spotify.com/authorize";

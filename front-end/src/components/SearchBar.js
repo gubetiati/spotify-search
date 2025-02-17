@@ -1,15 +1,13 @@
-// src/components/SearchBar.js
 import React from 'react';
 import { TextField, Button, Box, Typography } from '@mui/material'; 
 import { useDispatch } from 'react-redux';
-import { fetchTracks } from '../redux/searchSlice';  // Importando a action do Redux
+import { fetchTracks } from '../redux/searchSlice';
 
 const SearchBar = ({ query, setQuery, error }) => {
   const dispatch = useDispatch();
 
   const handleSearch = () => {
     if (query.trim()) {
-      // Envia a query para o Redux, que chamará o back-end
       const token = localStorage.getItem('spotifyToken');
       dispatch(fetchTracks({ query, token }));
     }
