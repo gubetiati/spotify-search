@@ -3,15 +3,19 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 export const fetchTracks = createAsyncThunk(
   'search/fetchTracks',
   async ({ query, token }) => {
-    const response = await fetch(`https://api.spotify.com/v1/search?q=${query}&type=track`, {
+    const response = await fetch('/api/search', {
+      method: 'POST',
       headers: {
-        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`, // Envia o token na autorização
       },
+      body: JSON.stringify({ query }),  // Corpo da requisição com a query
     });
     const data = await response.json();
-    return data.tracks?.items || [];
+    return data.tracks || [];
   }
 );
+
 
 const searchSlice = createSlice({
   name: 'search',

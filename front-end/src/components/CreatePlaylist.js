@@ -10,6 +10,9 @@ const CreatePlaylist = ({ token, selectedTracks, onPlaylistCreated }) => {
       return;
     }
 
+    // Mapear as músicas para enviar apenas o nome no formato correto
+    const trackNames = selectedTracks.map(track => track.name);
+
     try {
       const response = await fetch('/api/playlists', {
         method: 'POST',
@@ -17,19 +20,19 @@ const CreatePlaylist = ({ token, selectedTracks, onPlaylistCreated }) => {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
-        body: JSON.stringify({ 
-          name: playlistName, 
-          tracks: selectedTracks.map(track => track.name), 
+        body: JSON.stringify({
+          name: playlistName,
+          tracks: trackNames, // Enviando apenas o nome das músicas
         }),
       });
 
-      console.log('Enviando playlist:', { name: playlistName, tracks: selectedTracks.map(track => track.name) });
+      console.log('Enviando playlist:', { name: playlistName, tracks: trackNames });
 
       const data = await response.json();
       if (response.ok) {
         alert('Playlist criada com sucesso!');
-        onPlaylistCreated(data.playlist); 
-        setPlaylistName(''); 
+        onPlaylistCreated(data.playlist);
+        setPlaylistName('');
       } else {
         alert(data.message || 'Erro ao criar playlist');
       }
