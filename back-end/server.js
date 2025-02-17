@@ -1,7 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const playlistRoutes = require('./routes/playlists');
+const spotifyRoutes = require('./src/routes/spotifyRoutes');
+const playlistRoutes = require('./src/routes/playlists');
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ mongoose.connect(process.env.MONGO_URI, {
 .catch(err => console.error('Erro ao conectar ao MongoDB:', err));
 
 app.use('/api/playlists', playlistRoutes);
+app.use('/api', spotifyRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
